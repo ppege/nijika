@@ -1,0 +1,12 @@
+[package]
+name = "nijika"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+mathjax = "0.1.1"
+poise = "0.6.1"
+rand = "0.8.5"
+serenity = "0.12.2"
+tempfile = "3.13.0"
+tokio = { version = "1.21.2", features = ["macros", "rt-multi-thread"] }
