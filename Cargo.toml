@@ -5,8 +5,8 @@ edition = "2021"
 
 [dependencies]
 mathjax = "0.1.1"
-poise = "0.6.1"
+poise = { git = "https://github.com/serenity-rs/poise", branch = "current" }
 rand = "0.8.5"
-serenity = "0.12.2"
+serenity = "0.12.4"
 tempfile = "3.13.0"
 tokio = { version = "1.21.2", features = ["macros", "rt-multi-thread"] }

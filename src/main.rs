@@ -9,14 +9,18 @@ type Error = Box<dyn std::error::Error + Send + Sync>;
 type Context<'a> = poise::Context<'a, Data, Error>;
 
 /// Renders a LaTeX expression
-#[poise::command(slash_command, prefix_command)]
+#[poise::command(
+    slash_command,
+    install_context = "Guild|User",
+    interaction_context = "Guild|BotDm|PrivateChannel"
+)]
 async fn render(
     ctx: Context<'_>,
     #[description = "LaTeX expression"] expression: String,
     #[description = "Fill color"] color: Option<String>,
 ) -> Result<(), Error> {
     let now = time::Instant::now();
-    let renderer = MathJax::new().unwrap();
+    let renderer = MathJax::new().expect("Couldn't initialize MathJax...");
     match renderer.render(expression) {
         Ok(mut image) => {
             ctx.defer().await?;
@@ -76,11 +80,11 @@ async fn main() {
             ..Default::default()
         })
         .setup(|ctx, _ready, framework| {
-            tokio::spawn(channel_message_loop(
-                ctx.clone(),
-                1271013618271391785,
-                1237186067665260625,
-            ));
+            // tokio::spawn(channel_message_loop(
+            //     ctx.clone(),
+            //     1271013618271391785,
+            //     1237186067665260625,
+            // ));
             Box::pin(async move {
                 poise::builtins::register_globally(ctx, &framework.options().commands).await?;
                 Ok(Data {})
